@@ -46,7 +46,6 @@ public class ListAdapterSearch extends BaseAdapter {
     public long getItemId(int pos) { return pos; }
 
 	static class SearchViewHolder{
-		TextView titleTextView;
 		ImageView image;
 	}
     
@@ -61,7 +60,6 @@ public class ListAdapterSearch extends BaseAdapter {
     		convertView = rowInflater.inflate(R.layout.pod_search_result, p, false);
     		
     		searchViewHolder = new SearchViewHolder();
-    		searchViewHolder.titleTextView = (TextView)convertView.findViewById(R.id.title);
     		searchViewHolder.image = (ImageView)convertView.findViewById(R.id.image);
 
     		convertView.setTag(searchViewHolder);
@@ -71,29 +69,13 @@ public class ListAdapterSearch extends BaseAdapter {
     	}
 
     	try{
-    		searchViewHolder.titleTextView.setText(data.get(pos).getTitle());
-    		
-			StringBuilder photoUrl = new StringBuilder();
-			photoUrl.append("https://farm");
-			photoUrl.append(data.get(pos).getFarm_id());
-			photoUrl.append(".staticflickr.com/");
-			photoUrl.append(data.get(pos).getServer_id());
-			photoUrl.append("/");
-			photoUrl.append(data.get(pos).getPhoto_id());
-			photoUrl.append("_");
-			photoUrl.append(data.get(pos).getSecret());
-			photoUrl.append(".jpg");
-			
-    		try{
-	        	Picasso
-	        	.with(activity)
-	      	  	.load(photoUrl.toString())
-	      	  	.placeholder(R.drawable.grey_rectangle_600_2_spot)
-	      	  	.noFade()
-	      	  	.into(searchViewHolder.image);
 
-    		}catch(Exception e){ e.printStackTrace(); }
-
+            Picasso
+            .with(activity)
+            .load(data.get(pos).getPhotoUrl())
+            .placeholder(R.drawable.grey_rectangle_600_2_spot)
+            .noFade()
+            .into(searchViewHolder.image);
 
 //        Log.i("Log", "LastPos>>" + lastPosition + " Position>>" + pos);
 
@@ -108,7 +90,7 @@ public class ListAdapterSearch extends BaseAdapter {
 
     	}
     	catch(Exception e){
-    		Log.d("Toovia", "Faulty element in the ListAdapter");
+    		Log.d("Log", "Faulty element in the ListAdapter");
     		e.printStackTrace();
     	}
 

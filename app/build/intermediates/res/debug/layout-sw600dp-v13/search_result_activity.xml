@@ -16,7 +16,7 @@
             android:id="@+id/searchResultList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="2"
+            android:numColumns="3"
             android:verticalSpacing="0dp"
             android:horizontalSpacing="5dp"
             android:stretchMode="columnWidth"
@@ -47,8 +47,8 @@
 
     </FrameLayout>
 
-    
-	<!-- loading progress -->
+
+    <!-- loading progress -->
 	<FrameLayout
 	    android:id="@+id/loading_status"
 	    android:layout_width="match_parent"
@@ -83,3 +83,4 @@
  
 	
 </FrameLayout>
+<!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/layout-sw600dp/search_result_activity.xml -->

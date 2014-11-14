@@ -67,7 +67,7 @@ public class ListAdapterSavedSearch extends BaseAdapter {
 
     	}
     	catch(Exception e){
-    		Log.d("Toovia", "Faulty element in the ListAdapter");
+    		Log.d("Log", "Faulty element in the ListAdapter");
     		e.printStackTrace();
     	}
 

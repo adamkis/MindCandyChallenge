@@ -17,15 +17,5 @@
              />
     </shape>
 
-<!--     
-    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-	    <item android:drawable="@drawable/toovia_logo_150" android:id="@+id/toovia_logo_spinner"/>
-	</layer-list>
-	 -->
 </rotate> 
-
-
-<!--
-android:drawable="@drawable/toovia_logo_150" 
-        <size android:width="10dp" android:height="10dp" />
- --><!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/drawable/search_progressbar.xml -->
+<!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/drawable/search_progressbar.xml -->

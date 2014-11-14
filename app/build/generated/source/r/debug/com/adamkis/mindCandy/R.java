@@ -1307,14 +1307,18 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020030;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020031;
         public static final int abc_textfield_search_material=0x7f020032;
-        public static final int black_gradient_button=0x7f020033;
-        public static final int crouton_layout=0x7f020034;
-        public static final int dummy_invisible=0x7f020035;
-        public static final int footer_loading=0x7f020036;
-        public static final int grey_rectangle_600_2_spot=0x7f020037;
-        public static final int ic_launcher=0x7f020038;
-        public static final int search_bg_shadow=0x7f020039;
-        public static final int search_progressbar=0x7f02003a;
+        public static final int avatarimage=0x7f020033;
+        public static final int black_gradient_button=0x7f020034;
+        public static final int crouton_layout=0x7f020035;
+        public static final int dummy_invisible=0x7f020036;
+        public static final int footer_loading=0x7f020037;
+        public static final int grey_rectangle_600_2_spot=0x7f020038;
+        public static final int hearticon=0x7f020039;
+        public static final int ic_launcher=0x7f02003a;
+        public static final int postsicon=0x7f02003b;
+        public static final int reporticon=0x7f02003c;
+        public static final int search_bg_shadow=0x7f02003d;
+        public static final int search_progressbar=0x7f02003e;
     }
     public static final class id {
         public static final int action_bar=0x7f070033;
@@ -1332,13 +1336,14 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f070022;
         public static final int activity_chooser_view_content=0x7f070023;
         public static final int always=0x7f07000f;
+        public static final int appending_status=0x7f070048;
         public static final int beginning=0x7f07000a;
         public static final int book_search_keyword_edittext=0x7f070042;
         public static final int bottom=0x7f070016;
         public static final int checkbox=0x7f07002b;
         public static final int collapseActionView=0x7f070011;
-        public static final int crouton_main=0x7f07004a;
-        public static final int crouton_text=0x7f07004b;
+        public static final int crouton_main=0x7f07004b;
+        public static final int crouton_text=0x7f07004c;
         public static final int decor_content_parent=0x7f070031;
         public static final int default_activity_button=0x7f070026;
         public static final int dialog=0x7f070012;
@@ -1346,11 +1351,11 @@ containing a value of this type.
         public static final int dropdown=0x7f070013;
         public static final int edit_query=0x7f070035;
         public static final int end=0x7f07000c;
-        public static final int errorMessage=0x7f070049;
+        public static final int errorMessage=0x7f07004a;
         public static final int error_message=0x7f070045;
         public static final int expand_activities_button=0x7f070024;
         public static final int expanded_menu=0x7f07002a;
-        public static final int footer_loading=0x7f07004c;
+        public static final int footer_loading=0x7f07004d;
         public static final int home=0x7f07001b;
         public static final int homeAsUp=0x7f070006;
         public static final int icon=0x7f070028;
@@ -1358,7 +1363,7 @@ containing a value of this type.
         public static final int image=0x7f070025;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f070027;
-        public static final int loading_status=0x7f070048;
+        public static final int loading_status=0x7f070049;
         public static final int middle=0x7f07000b;
         public static final int never=0x7f07000d;
         public static final int none=0x7f070003;
@@ -1647,7 +1652,7 @@ containing a value of this type.
         public static final int ThemeOverlay_AppCompat_Dark=0x7f0b00aa;
         public static final int ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0b00ab;
         public static final int ThemeOverlay_AppCompat_Light=0x7f0b00ac;
-        public static final int WhiteActionBar2=0x7f0b00e7;
+        public static final int WhiteActionBar=0x7f0b00e7;
         public static final int Widget_AppCompat_ActionBar=0x7f0b00ad;
         public static final int Widget_AppCompat_ActionBar_Solid=0x7f0b00ae;
         public static final int Widget_AppCompat_ActionBar_TabBar=0x7f0b00af;

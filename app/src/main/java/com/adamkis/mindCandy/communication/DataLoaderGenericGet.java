@@ -68,7 +68,7 @@ public class DataLoaderGenericGet extends AsyncTask<String, Void, String > {
 	        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 
 	        HttpGet httpGet = new HttpGet( url ); 
-			Log.i("Toovia", "Mode: " + mode + " The URL called for Generic GET call: " + url );
+			Log.i("Log", "Mode: " + mode + " The URL called for Generic GET call: " + url );
 
 			HttpResponse httpResponse = httpclient.execute(httpGet, localContext);
 			HttpEntity responseEntity = httpResponse.getEntity();

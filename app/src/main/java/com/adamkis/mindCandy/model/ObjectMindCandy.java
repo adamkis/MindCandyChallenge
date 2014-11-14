@@ -16,15 +16,30 @@ public class ObjectMindCandy implements Serializable {
 	private String farm_id = null;	
 	private String server_id = null;
 	private String photo_id = null;	
-	private String secret = null;	
+	private String secret = null;
 
+    private String photoUrl = null;
 
-	public ObjectMindCandy( JSONObject jsonObject ){
+    public ObjectMindCandy( JSONObject jsonObject ){
 		setTitle(jsonObject.optString("title"));
 		setFarm_id(jsonObject.optString("farm"));
 		setServer_id(jsonObject.optString("server"));
 		setPhoto_id(jsonObject.optString("id"));
 		setSecret(jsonObject.optString("secret"));
+
+        StringBuilder photoUrlBuilder = new StringBuilder();
+        photoUrlBuilder.append("https://farm");
+        photoUrlBuilder.append(getFarm_id());
+        photoUrlBuilder.append(".staticflickr.com/");
+        photoUrlBuilder.append(getServer_id());
+        photoUrlBuilder.append("/");
+        photoUrlBuilder.append(getPhoto_id());
+        photoUrlBuilder.append("_");
+        photoUrlBuilder.append(getSecret());
+        photoUrlBuilder.append(".jpg");
+
+        setPhotoUrl( photoUrlBuilder.toString() );
+
 	}
 
 	public String getTitle() {
@@ -63,10 +78,11 @@ public class ObjectMindCandy implements Serializable {
 		return secret;
 	}
 
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
+	public void setSecret(String secret) { this.secret = secret; }
 
-	
+
+    public String getPhotoUrl() { return photoUrl; }
+
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
 
 }

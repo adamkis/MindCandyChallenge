@@ -3,10 +3,10 @@
     <!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/values-v11/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
-        <item name="actionBarStyle">@style/WhiteActionBar2</item>
-    	<item name="android:actionBarStyle">@style/WhiteActionBar2</item>
-    	<item name="android:windowContentOverlay">@null</item>
-    	<item name="android:windowBackground">@android:color/white</item>
+        <item name="actionBarStyle">@style/WhiteActionBar</item>
+    	<item name="android:actionBarStyle">@style/WhiteActionBar</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/white</item>
     	
     </style>
     <!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/res/values-v11/values.xml -->
@@ -353,7 +353,6 @@
     </style>
     <!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/values-v11/styles.xml -->
     <eat-comment/>
-    <style name="WhiteActionBar2" parent="Base.Widget.AppCompat.Light.ActionBar">
-        <item name="android:background">#FFFFFF</item>
+    <style name="WhiteActionBar" parent="Base.Widget.AppCompat.Light.ActionBar">
     </style>
 </resources>

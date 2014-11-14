@@ -17,14 +17,14 @@ public class SavedSearchesCache {
 
 	private final static String fileName = "saved_searches";
 
-	public static void saveSearches( ArrayList<String> tooviaObjects, Context context ){
+	public static void saveSearches( ArrayList<String> objects, Context context ){
 		// Write user to the INTERNAL STORAGE
 		FileOutputStream fos = null;
 		try {
 
 			fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
 			ObjectOutputStream os = new ObjectOutputStream(fos);
-			os.writeObject(tooviaObjects);
+			os.writeObject(objects);
 	    	os.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -38,7 +38,7 @@ public class SavedSearchesCache {
 	@SuppressWarnings("unchecked")
 	public static ArrayList<String> loadSearches( Context context ){
 		
-		ArrayList<String> tooviaObjects = null;
+		ArrayList<String> objects = null;
 		
 		ObjectInputStream objectInputStream = null;
 		try {
@@ -48,7 +48,7 @@ public class SavedSearchesCache {
 			
 			// Only way to determine the end is that it'll throw an exception
 			while( true ){
-				tooviaObjects = (ArrayList<String>)objectInputStream.readObject();
+				objects = (ArrayList<String>)objectInputStream.readObject();
 			}
 
 			
@@ -71,7 +71,7 @@ public class SavedSearchesCache {
 			e.printStackTrace();
 		}
 
-		return tooviaObjects;
+		return objects;
 	}
 	
 	public static void addSearch( String searchText, Context context ){

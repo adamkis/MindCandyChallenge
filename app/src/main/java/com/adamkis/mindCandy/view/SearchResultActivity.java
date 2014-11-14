@@ -39,8 +39,6 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 
     private GridView gridView;
 	private SearchResultActivity searchResultActivity;
-
-
 	private String searchKeyWord = null;
 	
 	private boolean appending = false;
@@ -48,7 +46,6 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
     public boolean dataLoadDone = true;
     public int searchResultCountTotal = 1;
 
-//    private DataLoaderGenericGet dlgg = null;
 
     private int page = 1;
 
@@ -57,12 +54,14 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
     private ListAdapterSearch adapter = null;
 
     private View loadingStatusView = null;
+    private View appendingStatusView = null;
     private Animation fade_in;
     private Animation fade_out;
     private Animation.AnimationListener animationListener;
+    private Animation.AnimationListener appendingAnimationListener;
 
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_result_activity);
@@ -87,7 +86,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 
         // Make our first call to the server
         makeCallToServer(page);
-		showProgress(true);
+        showProgress(true, false);
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
@@ -96,7 +95,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
             public void onRefresh()
             {
                 makeCallToServer(1);
-                showProgress(true);
+                showProgress(true, false);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -191,13 +190,13 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
             } catch (Exception e) {
                 e.printStackTrace();
                 showError(true, "No matching results found...");
-                showProgress(false);
+                showProgress(false, false);
                 return;
             }
 
             if( dataJSONArray.length() < 1 ){
                 showError(true, "No matching results found...");
-                showProgress(false);
+                showProgress(false, false);
                 return;
             }
             else{
@@ -207,13 +206,13 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
                         imageResultList.add(new ObjectMindCandy(dataJSONArray.getJSONObject(i)));
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.w("Toovia", "When parsing FLICKR object results: book cannot be parsed. Index: " + i);
+                        Log.w("Log", "When parsing FLICKR object results: book cannot be parsed. Index: " + i);
                     }
                 }
 
                 if( imageResultList.size() == 0 ){
                     showError(true, "No matching results found...");
-                    showProgress(false);
+                    showProgress(false, false);
                     return;
                 }
 
@@ -233,7 +232,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
                 } catch (Exception e) {
                     e.printStackTrace();
                     showError(true, "No matching results found...");
-                    showProgress(false);
+                    showProgress(false, false);
                     return;
                 }
 
@@ -282,12 +281,13 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
                         if(loadMore) {
                             dataLoadDone = false;
                             makeCallToServer(++page);
+                            showProgress(true, true);
                         }
                     }
                 });
 
 
-                showProgress(false);
+                showProgress(false, false);
 
 
             }
@@ -300,6 +300,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
                 dataLoadDone = true;
                 adapter.appendAdapterData(imageResultList);
                 adapter.notifyDataSetChanged();
+                showProgress(false, true);
 
             }
 
@@ -312,39 +313,74 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 	}
 
 
-    @Override
-    public void showProgress(boolean show) {
+    public void showProgress(boolean show, final boolean appending) {
 
         // init if not inited
-        if( loadingStatusView == null )
-            loadingStatusView = (View)findViewById(R.id.loading_status);
+        if( appending ) {
+            if (appendingStatusView == null) {
+                appendingStatusView = (View) findViewById(R.id.appending_status);
+            }
+            if( appendingAnimationListener == null ){
+                appendingAnimationListener = new Animation.AnimationListener(){
+                    @Override
+                    public void onAnimationStart(Animation arg0) {}
+                    @Override
+                    public void onAnimationRepeat(Animation arg0) {}
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+                        appendingStatusView.setVisibility(View.GONE);
+                    }
+                };
+            }
+
+        }
+        else {
+            if (loadingStatusView == null) {
+                loadingStatusView = (View) findViewById(R.id.loading_status);
+            }
+            if( animationListener == null ){
+                animationListener = new Animation.AnimationListener(){
+                    @Override
+                    public void onAnimationStart(Animation arg0) {}
+                    @Override
+                    public void onAnimationRepeat(Animation arg0) {}
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+                        loadingStatusView.setVisibility(View.GONE);
+                    }
+                };
+            }
+        }
+        
+        
+        
         if( fade_in == null )
             fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         if( fade_out == null )
             fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        if( animationListener == null ){
-            animationListener = new Animation.AnimationListener(){
-                @Override
-                public void onAnimationStart(Animation arg0) {
-                }
-                @Override
-                public void onAnimationRepeat(Animation arg0) {
-                }
-                @Override
-                public void onAnimationEnd(Animation arg0) {
-                    loadingStatusView.setVisibility(View.GONE);
-                }
-            };
-        }
+
+
 
         // handling visibility
         if( show ){
-            loadingStatusView.setVisibility( View.VISIBLE );
-            loadingStatusView.startAnimation(fade_in);
+            if( appending ) {
+                appendingStatusView.setVisibility(View.VISIBLE);
+                appendingStatusView.startAnimation(fade_in);
+            }
+            else{
+                loadingStatusView.setVisibility(View.VISIBLE);
+                loadingStatusView.startAnimation(fade_in);
+            }
         }
         else{
-            fade_out.setAnimationListener(animationListener);
-            loadingStatusView.startAnimation( fade_out );
+            if( appending ) {
+                fade_out.setAnimationListener(appendingAnimationListener);
+                appendingStatusView.startAnimation( fade_out );
+            }
+            else{
+                fade_out.setAnimationListener(animationListener);
+                loadingStatusView.startAnimation( fade_out );
+            }
         }
 
 

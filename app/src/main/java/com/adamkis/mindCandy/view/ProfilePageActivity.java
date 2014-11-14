@@ -45,21 +45,10 @@ public class ProfilePageActivity extends ActionBarActivity {
 			
 			
 			// Displaying the image
-			StringBuilder photoUrl = new StringBuilder();
-			photoUrl.append("https://farm");
-			photoUrl.append(flickrObject.getFarm_id());
-			photoUrl.append(".staticflickr.com/");
-			photoUrl.append(flickrObject.getServer_id());
-			photoUrl.append("/");
-			photoUrl.append(flickrObject.getPhoto_id());
-			photoUrl.append("_");
-			photoUrl.append(flickrObject.getSecret());
-			photoUrl.append(".jpg");
-			
     		try{
 	        	Picasso
 	        	.with(profilePageActivity)
-	      	  	.load(photoUrl.toString())
+	      	  	.load(flickrObject.getPhotoUrl())
 	      	  	.placeholder(R.drawable.grey_rectangle_600_2_spot)
 	      	  	.into(image);
 
