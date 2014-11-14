@@ -4,7 +4,7 @@
 
     <translate
         android:duration="@integer/slide_time"
-        android:fromYDelta="10%"
+        android:fromYDelta="4%"
         android:toYDelta="0" />
 
     <!--<alpha-->

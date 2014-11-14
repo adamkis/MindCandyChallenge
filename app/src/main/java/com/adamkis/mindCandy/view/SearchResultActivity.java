@@ -15,6 +15,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,6 +31,7 @@ import com.adamkis.mindCandy.model.ObjectMindCandy;
 import com.adamkis.mindCandy.utils.Utils;
 import com.adamkis.mindCandy.view.adapters.ListAdapterSearch;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 
 
 public class SearchResultActivity extends ActionBarActivity implements DataHandlerInterface {
@@ -36,7 +39,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 
     private GridView gridView;
 	private SearchResultActivity searchResultActivity;
-	 
+
 
 	private String searchKeyWord = null;
 	
@@ -45,13 +48,19 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
     public boolean dataLoadDone = true;
     public int searchResultCountTotal = 1;
 
-    private DataLoaderGenericGet dlgg = null;
+//    private DataLoaderGenericGet dlgg = null;
 
     private int page = 1;
 
     private ArrayList<ObjectMindCandy> imageResultList = null;
 
     private ListAdapterSearch adapter = null;
+
+    private View loadingStatusView = null;
+    private Animation fade_in;
+    private Animation fade_out;
+    private Animation.AnimationListener animationListener;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,27 +85,48 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 
         gridView = (GridView)findViewById(R.id.searchResultList);
 
-		StringBuilder url = new StringBuilder();
-		url.append(Constants.FLICKR_SEARCH_PATH);
-		url.append("&api_key=" + Constants.FLICKR_API_KEY);
-		url.append("&format=json&nojsoncallback=1");
-
-		try { 
-		  url.append("&tags=" + URLEncoder.encode(searchKeyWord, "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-		  e.printStackTrace();
-		  showError(true, "The search went wrong. Sorry about that");
-		  return;
-		}
-
-
-		dlgg = new DataLoaderGenericGet(searchResultActivity, url.toString(), "search");
-		dlgg.execute();
+        // Make our first call to the server
+        makeCallToServer(page);
 		showProgress(true);
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                makeCallToServer(1);
+                showProgress(true);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
 	      
 	}
-	      
+
+
+    private void makeCallToServer(int page){
+
+        StringBuilder url = new StringBuilder();
+        url.append(Constants.FLICKR_SEARCH_PATH);
+        url.append("&api_key=" + Constants.FLICKR_API_KEY);
+        url.append("&format=json&nojsoncallback=1");
+
+        try {
+            url.append("&tags=" + URLEncoder.encode(searchKeyWord, "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            showError(true, "The search went wrong. Sorry about that");
+            return;
+        }
+
+        url.append("&page=" + page);
+
+        String mode = ( page == 1 ) ? "search" : "append";
+
+        DataLoaderGenericGet dlgg = new DataLoaderGenericGet(searchResultActivity, url.toString(), mode);
+        dlgg.execute();
+    }
 
 	@Override
 	public void onBackPressed(){
@@ -104,18 +134,6 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 	}
 
 
-	@Override
-	public void showProgress(final boolean show) {
-
-		final View loadingStatusView = (View)findViewById(R.id.loading_status);
-		if( show ){
-			loadingStatusView.setVisibility( View.VISIBLE );
-		}
-		else{
-			loadingStatusView.setVisibility( View.GONE );
-		}
-		
-	}
 
 	
 	public void showError(final boolean show, String message) {
@@ -263,29 +281,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 
                         if(loadMore) {
                             dataLoadDone = false;
-
-                            StringBuilder url = new StringBuilder();
-                            url.append(Constants.FLICKR_SEARCH_PATH);
-                            url.append("&api_key=" + Constants.FLICKR_API_KEY);
-                            url.append("&format=json&nojsoncallback=1");
-
-                            try {
-                                url.append("&tags=" + URLEncoder.encode(searchKeyWord, "utf-8"));
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                                showError(true, "The search went wrong. Sorry about that");
-                                return;
-                            }
-
-                            url.append("&page=" + ++page);
-
-                            dlgg = new DataLoaderGenericGet(searchResultActivity, url.toString(), "append");
-                            dlgg.execute();
-
-                            showAppendingProgress();
-
-                            Log.i("Log", "next page");
-
+                            makeCallToServer(++page);
                         }
                     }
                 });
@@ -315,8 +311,44 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 		
 	}
 
-    private void showAppendingProgress() {
-        Utils.showCrouton("Loading", searchResultActivity);
+
+    @Override
+    public void showProgress(boolean show) {
+
+        // init if not inited
+        if( loadingStatusView == null )
+            loadingStatusView = (View)findViewById(R.id.loading_status);
+        if( fade_in == null )
+            fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        if( fade_out == null )
+            fade_out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        if( animationListener == null ){
+            animationListener = new Animation.AnimationListener(){
+                @Override
+                public void onAnimationStart(Animation arg0) {
+                }
+                @Override
+                public void onAnimationRepeat(Animation arg0) {
+                }
+                @Override
+                public void onAnimationEnd(Animation arg0) {
+                    loadingStatusView.setVisibility(View.GONE);
+                }
+            };
+        }
+
+        // handling visibility
+        if( show ){
+            loadingStatusView.setVisibility( View.VISIBLE );
+            loadingStatusView.startAnimation(fade_in);
+        }
+        else{
+            fade_out.setAnimationListener(animationListener);
+            loadingStatusView.startAnimation( fade_out );
+        }
+
+
+
     }
 
     @Override

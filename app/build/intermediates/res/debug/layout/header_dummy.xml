@@ -1,0 +1,6 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp" />
+
+
+<!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/layout/header_dummy.xml -->

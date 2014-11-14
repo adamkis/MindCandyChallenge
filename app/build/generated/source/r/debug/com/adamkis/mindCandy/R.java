@@ -15,10 +15,12 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040003;
         public static final int abc_slide_out_bottom=0x7f040004;
         public static final int abc_slide_out_top=0x7f040005;
-        public static final int fade_in_activity=0x7f040006;
-        public static final int fade_out_activity=0x7f040007;
-        public static final int slide_down=0x7f040008;
-        public static final int slide_up=0x7f040009;
+        public static final int fade_in=0x7f040006;
+        public static final int fade_in_activity=0x7f040007;
+        public static final int fade_out=0x7f040008;
+        public static final int fade_out_activity=0x7f040009;
+        public static final int slide_down=0x7f04000a;
+        public static final int slide_up=0x7f04000b;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -1335,8 +1337,8 @@ containing a value of this type.
         public static final int bottom=0x7f070016;
         public static final int checkbox=0x7f07002b;
         public static final int collapseActionView=0x7f070011;
-        public static final int crouton_main=0x7f070049;
-        public static final int crouton_text=0x7f07004a;
+        public static final int crouton_main=0x7f07004a;
+        public static final int crouton_text=0x7f07004b;
         public static final int decor_content_parent=0x7f070031;
         public static final int default_activity_button=0x7f070026;
         public static final int dialog=0x7f070012;
@@ -1344,11 +1346,11 @@ containing a value of this type.
         public static final int dropdown=0x7f070013;
         public static final int edit_query=0x7f070035;
         public static final int end=0x7f07000c;
-        public static final int errorMessage=0x7f070048;
+        public static final int errorMessage=0x7f070049;
         public static final int error_message=0x7f070045;
         public static final int expand_activities_button=0x7f070024;
         public static final int expanded_menu=0x7f07002a;
-        public static final int footer_loading=0x7f07004b;
+        public static final int footer_loading=0x7f07004c;
         public static final int home=0x7f07001b;
         public static final int homeAsUp=0x7f070006;
         public static final int icon=0x7f070028;
@@ -1356,7 +1358,7 @@ containing a value of this type.
         public static final int image=0x7f070025;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f070027;
-        public static final int loading_status=0x7f070047;
+        public static final int loading_status=0x7f070048;
         public static final int middle=0x7f07000b;
         public static final int never=0x7f07000d;
         public static final int none=0x7f070003;
@@ -1366,7 +1368,7 @@ containing a value of this type.
         public static final int radio=0x7f07002d;
         public static final int saved_searches_listview=0x7f070041;
         public static final int searchButton=0x7f070043;
-        public static final int searchResultList=0x7f070046;
+        public static final int searchResultList=0x7f070047;
         public static final int search_badge=0x7f070037;
         public static final int search_bar=0x7f070036;
         public static final int search_button=0x7f070038;
@@ -1384,6 +1386,7 @@ containing a value of this type.
         public static final int showTitle=0x7f070007;
         public static final int split_action_bar=0x7f07001e;
         public static final int submit_area=0x7f07003e;
+        public static final int swipeRefreshLayout=0x7f070046;
         public static final int tabMode=0x7f070002;
         public static final int title=0x7f070029;
         public static final int top=0x7f070015;
@@ -1421,13 +1424,15 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030015;
         public static final int abc_simple_dropdown_hint=0x7f030016;
         public static final int activity_main=0x7f030017;
-        public static final int footer_main=0x7f030018;
-        public static final int header_main=0x7f030019;
-        public static final int pod_saved_search=0x7f03001a;
-        public static final int pod_search_result=0x7f03001b;
-        public static final int profile_page_activity=0x7f03001c;
-        public static final int search_result_activity=0x7f03001d;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
+        public static final int footer_appending=0x7f030018;
+        public static final int footer_main=0x7f030019;
+        public static final int header_dummy=0x7f03001a;
+        public static final int header_main=0x7f03001b;
+        public static final int pod_saved_search=0x7f03001c;
+        public static final int pod_search_result=0x7f03001d;
+        public static final int profile_page_activity=0x7f03001e;
+        public static final int search_result_activity=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0a0000;
