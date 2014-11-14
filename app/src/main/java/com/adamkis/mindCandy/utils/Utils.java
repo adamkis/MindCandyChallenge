@@ -113,10 +113,10 @@ public class Utils {
 	public static void longLog(String str) {
 		if( str != null ){
 		    if(str.length() > 4000) {
-		        Log.d("Toovia", str.substring(0, 4000));
+		        Log.d("Log", str.substring(0, 4000));
 		        longLog(str.substring(4000));
 		    } else
-		        Log.d("Toovia", str);
+		        Log.d("Log", str);
 		}
 	}
 	

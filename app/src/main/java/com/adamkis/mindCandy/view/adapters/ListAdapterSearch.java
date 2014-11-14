@@ -95,7 +95,7 @@ public class ListAdapterSearch extends BaseAdapter {
     		}catch(Exception e){ e.printStackTrace(); }
 
 
-        Log.i("Log", "LastPos>>" + lastPosition + " Position>>" + pos);
+//        Log.i("Log", "LastPos>>" + lastPosition + " Position>>" + pos);
 
 //        Animation animation = AnimationUtils.loadAnimation(activity, (pos > lastPosition) ? R.anim.slide_up : R.anim.slide_down);
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.slide_up);

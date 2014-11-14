@@ -15,10 +15,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.adamkis.mindCandy.R;
@@ -37,12 +37,21 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
     private GridView gridView;
 	private SearchResultActivity searchResultActivity;
 	 
-//	private int resultCount;
-//	private int currentPageIndex = 1;
 
 	private String searchKeyWord = null;
 	
-//	private boolean appending = false;
+	private boolean appending = false;
+
+    public boolean dataLoadDone = true;
+    public int searchResultCountTotal = 1;
+
+    private DataLoaderGenericGet dlgg = null;
+
+    private int page = 1;
+
+    private ArrayList<ObjectMindCandy> imageResultList = null;
+
+    private ListAdapterSearch adapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +90,7 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 		}
 
 
-		DataLoaderGenericGet dlgg = new DataLoaderGenericGet(searchResultActivity, url.toString(), "search");
+		dlgg = new DataLoaderGenericGet(searchResultActivity, url.toString(), "search");
 		dlgg.execute();
 		showProgress(true);
 
@@ -132,110 +141,185 @@ public class SearchResultActivity extends ActionBarActivity implements DataHandl
 	@Override
 	public void callBackGet(String response, String mode) {
 
-		if ( mode.equals("search") ){
-		
-			Log.i("Log", "Search response was:");
-			Utils.longLog(response);
-			
-			if( response.equalsIgnoreCase("UnknownHostException") ){
-				showError(true, "Oops... Looks like your device has no connection");
-				return;
-			}
-			
-			
-	        try {		
-	        	
-	        	// Parsing the JSON
-	        	JSONObject rawSearchResponseJSONObject;
-				try {
-					rawSearchResponseJSONObject = new JSONObject(response);
-				} catch (JSONException e1) {
-					showError(true, "Oops, something went wrong...");
-					e1.printStackTrace();
-					return;
-				}
+//        Log.i("Log", "Search response was:");
+//        Utils.longLog(response);
+
+        if( response != null && response.equalsIgnoreCase("UnknownHostException") ){
+            showError(true, "Oops... Looks like your device has no connection");
+            return;
+        }
 
 
-	        	ArrayList<ObjectMindCandy> resultList = new ArrayList<ObjectMindCandy>();
+        try {
 
-				JSONArray dataJSONArray = new JSONArray();
-				try {
-					dataJSONArray = rawSearchResponseJSONObject
-							.optJSONObject("photos")
-							.optJSONArray("photo");
-				} catch (Exception e) {
-					e.printStackTrace();
-					showError(true, "No matching results found...");
-					showProgress(false);
-					return;
-				}
-				
-				if( dataJSONArray.length() < 1 ){
-					showError(true, "No matching results found...");
-					showProgress(false);
-					return;
-				}
-				else{
-				
-					for ( int i = 0; i < dataJSONArray.length(); i++  ){
-						try {
-							resultList.add( new ObjectMindCandy( dataJSONArray.optJSONObject(i) ) );
-						} catch (Exception e) {
-							e.printStackTrace(); 
-							Log.w("Toovia", "When parsing FLICKR object results: book cannot be parsed. Index: " + i);
-						}
-					} 
-		
-					if( resultList.size() == 0 ){
-						showError(true, "No matching results found...");
-						showProgress(false);
-						return;
-					}
-				
-				}
+            // Parsing the JSON
+            JSONObject rawSearchResponseJSONObject;
+            try {
+                rawSearchResponseJSONObject = new JSONObject(response);
+            } catch (JSONException e1) {
+                showError(true, "Oops, something went wrong...");
+                e1.printStackTrace();
+                return;
+            }
 
-	
-				
-				// Showing the results
-				ListAdapterSearch adapter = new ListAdapterSearch(resultList, searchResultActivity);
 
+            imageResultList = new ArrayList<ObjectMindCandy>();
+
+            JSONArray dataJSONArray = new JSONArray();
+            try {
+                dataJSONArray = rawSearchResponseJSONObject
+                        .getJSONObject("photos")
+                        .getJSONArray("photo");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showError(true, "No matching results found...");
+                showProgress(false);
+                return;
+            }
+
+            if( dataJSONArray.length() < 1 ){
+                showError(true, "No matching results found...");
+                showProgress(false);
+                return;
+            }
+            else{
+
+                for ( int i = 0; i < dataJSONArray.length(); i++  ){
+                    try {
+                        imageResultList.add(new ObjectMindCandy(dataJSONArray.getJSONObject(i)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.w("Toovia", "When parsing FLICKR object results: book cannot be parsed. Index: " + i);
+                    }
+                }
+
+                if( imageResultList.size() == 0 ){
+                    showError(true, "No matching results found...");
+                    showProgress(false);
+                    return;
+                }
+
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////
+            // Showing search results with the first results
+            /////////////////////////////////////////////////////////////////////////////////////
+            if ( mode.equals("search") ){
+
+                try {
+                    searchResultCountTotal =
+                            Integer.parseInt(
+                            rawSearchResponseJSONObject
+                                .getJSONObject("photos")
+                                .getString("total"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showError(true, "No matching results found...");
+                    showProgress(false);
+                    return;
+                }
+
+                // Showing the results
+                adapter = new ListAdapterSearch(imageResultList, searchResultActivity);
                 gridView.setAdapter(adapter);
-				adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
 
                 gridView.setOnItemClickListener(new OnItemClickListener() {
-				
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-					
-						if ( ((ObjectMindCandy)arg0.getItemAtPosition(arg2)).getTitle() != null ){
-						
-							Intent detailsPageIntent = new Intent(searchResultActivity, ProfilePageActivity.class);
-							detailsPageIntent.putExtra("FLICKRObject",
-									((Serializable)(((ObjectMindCandy)arg0.getItemAtPosition(arg2)))));
-							searchResultActivity.startActivity( detailsPageIntent );
-							return;
-						}
-						else{
-							
-						}
-					
-					}
-				});
 
-				showProgress(false);
-				
-				
-				
-					
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-        
-		}
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                        if ( ((ObjectMindCandy)arg0.getItemAtPosition(arg2)).getTitle() != null ){
+
+                            Intent detailsPageIntent = new Intent(searchResultActivity, ProfilePageActivity.class);
+                            detailsPageIntent.putExtra("FLICKRObject",
+                                    ((Serializable)(((ObjectMindCandy)arg0.getItemAtPosition(arg2)))));
+                            searchResultActivity.startActivity( detailsPageIntent );
+                            return;
+                        }
+                        else{
+
+                        }
+
+                    }
+                });
+
+
+                gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {}
+
+                    @Override
+                    public void onScroll(AbsListView view, int firstVisible, int visibleCount, int totalCount) {
+
+
+                        boolean loadMore = ( firstVisible + visibleCount >= totalCount ) && totalCount!=0 && dataLoadDone && totalCount < searchResultCountTotal;
+//                            Log.i("Log", "\nFirst visible: " + Integer.toString(firstVisible));
+//                            Log.i("Log", "Visible count: " + Integer.toString(visibleCount));
+//                            Log.i("Log", "Total count: " + Integer.toString(totalCount));
+//                            Log.i("Log", "DataLoadDone: " + dataLoadDone);
+//                            Log.i("Log", "SearchResultCountTotal: " + searchResultCountTotal);
+
+                        if(loadMore) {
+                            dataLoadDone = false;
+
+                            StringBuilder url = new StringBuilder();
+                            url.append(Constants.FLICKR_SEARCH_PATH);
+                            url.append("&api_key=" + Constants.FLICKR_API_KEY);
+                            url.append("&format=json&nojsoncallback=1");
+
+                            try {
+                                url.append("&tags=" + URLEncoder.encode(searchKeyWord, "utf-8"));
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                                showError(true, "The search went wrong. Sorry about that");
+                                return;
+                            }
+
+                            url.append("&page=" + ++page);
+
+                            dlgg = new DataLoaderGenericGet(searchResultActivity, url.toString(), "append");
+                            dlgg.execute();
+
+                            showAppendingProgress();
+
+                            Log.i("Log", "next page");
+
+                        }
+                    }
+                });
+
+
+                showProgress(false);
+
+
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////
+            // Appending new Results
+            /////////////////////////////////////////////////////////////////////////////////////
+            if ( mode.equals("append") ){
+
+                dataLoadDone = true;
+                adapter.appendAdapterData(imageResultList);
+                adapter.notifyDataSetChanged();
+
+            }
+
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
 		
 	}
-	
-	@Override
+
+    private void showAppendingProgress() {
+        Utils.showCrouton("Loading", searchResultActivity);
+    }
+
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
