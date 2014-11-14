@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="0dp" />
+
+<!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/drawable/dummy_invisible.xml -->

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/values-v16/styles.xml -->
+    <eat-comment/>
+    <style name="condensedFont">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    <style name="lightFont">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+    <style name="thinFont">
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+</resources>

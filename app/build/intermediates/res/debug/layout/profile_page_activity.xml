@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+	<ScrollView
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:padding="25dp" >
+	        
+	        
+
+     	    <ImageView
+		        android:id="@+id/image"
+		        android:contentDescription="@string/app_name"
+		        android:layout_width = "match_parent"
+				android:layout_height= "300dp"
+		        android:layout_marginLeft="0dp"
+		        android:layout_marginRight="0dp"
+		        android:gravity="center"
+		        android:scaleType="centerCrop"  />
+	        
+	        
+	        
+	         <!-- Title -->
+		     <TextView
+	         	style="@style/condensedFont"
+		        android:id="@+id/title"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="15dp"
+		        android:gravity="center"
+		        android:textColor="#040404"
+		        android:textSize="30sp"
+		        android:typeface="sans" />
+
+		</LinearLayout>
+	
+	
+	
+	</ScrollView>
+	
+	<!-- Error Message -->
+    <TextView
+       	style="@style/thinFont"
+	    android:id="@+id/error_message"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:gravity="center"
+	    android:textColor="#000000"
+	    android:textSize="30sp"
+	    android:background="#FFFFFF"
+	    android:text="@string/profile_page_error_message"
+		android:visibility="gone"/>
+
+</FrameLayout>
+<!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/layout/profile_page_activity.xml -->

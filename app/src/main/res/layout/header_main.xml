@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
+    
+    <EditText 
+        style="@style/thinFont"
+        android:id="@+id/book_search_keyword_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:hint="@string/search_edittext_hint"
+        android:textColor="#000000"
+        android:imeOptions="actionSearch" 
+    	android:inputType="text"
+        android:layout_gravity="center|top"/>
+    
+  	<Button 
+        style="@style/thinFont"
+        android:id="@+id/searchButton"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:text="@string/searchButtonText"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/black_gradient_button"
+        android:layout_gravity="center|top"/>
+  	
+  	<TextView
+        style="@style/thinFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/search_history"
+        android:textSize="30sp"
+        android:gravity="center" />
+ 
+</LinearLayout>
+

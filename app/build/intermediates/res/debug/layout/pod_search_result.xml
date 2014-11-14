@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/search_bg_shadow"
+    android:textColor="#707070" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp" >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width = "match_parent"
+            android:layout_height= "200dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:gravity="center"
+            android:scaleType="centerCrop"  />
+
+        <TextView
+            style="@style/thinFont"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="#040404"
+            android:textSize="14sp"
+            android:typeface="sans"
+            android:maxLines="3"
+            android:singleLine="false"
+            />
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+<!-- From: file:/Users/adam/Dev/AndroidstudioProjects/MindCandyChallenge/app/src/main/res/layout/pod_search_result.xml -->

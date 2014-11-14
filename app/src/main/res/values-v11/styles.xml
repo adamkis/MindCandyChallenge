@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        Base application theme for API 11+. This theme completely replaces
+        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+    -->
+<!-- 
+    <style name="WhiteActionBar" parent="Widget.AppCompat.Light.Base.ActionBar">
+        <item name="android:background">#FFFFFF</item>
+    </style>
+    Base.Widget.AppCompat.Light.ActionBar
+    Widget.AppCompat.Light.ActionBar
+ -->
+    <style name="WhiteActionBar2" parent="Base.Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">#FFFFFF</item>
+    </style>
+    
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <item name="actionBarStyle">@style/WhiteActionBar2</item>
+    	<item name="android:actionBarStyle">@style/WhiteActionBar2</item>
+    	<item name="android:windowContentOverlay">@null</item>
+    	<item name="android:windowBackground">@android:color/white</item>
+    	
+    </style> 
+
+</resources>

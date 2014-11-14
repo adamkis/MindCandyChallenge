@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MindCandyChallenge</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="no_matching_result_found">No matching results found</string>
+    <string name="searchButtonText">Search</string>
+    <string name="search_edittext_hint">Add keywords&#8230;</string>
+    <string name="profile_page_summary_label">Summary</string>
+    <string name="profile_page_book_id_label">ID</string>
+    <string name="profile_page_error_message">Ooops&#8230; something went wrong while showing this page</string>
+    <string name="search_history">Search History</string>
+    
+    
+    
+
+</resources>

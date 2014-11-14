@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/searchResultList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="5dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"
+        />
+
+    
+	<!-- loading progress -->
+	<FrameLayout
+	    android:id="@+id/loading_status"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="#FFFFFF"
+	    android:visibility="gone" >
+	
+	    <ProgressBar
+	        style="?android:attr/progressBarStyleLarge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+		    android:gravity="center"
+	        android:indeterminateDrawable="@drawable/search_progressbar" />
+
+	</FrameLayout>
+	
+	<!-- Error Message -->
+	<TextView
+	    style="@style/thinFont"
+	    android:id="@+id/errorMessage"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:padding="50dp"
+	    android:layout_gravity="center"
+	    android:gravity="center"
+	    android:background="#FFFFFF"
+	    android:textSize="22sp"
+	    android:text="@string/no_matching_result_found"
+	    android:visibility="gone" />
+
+ 
+	
+</FrameLayout>
